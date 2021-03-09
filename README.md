@@ -1,3 +1,3 @@
-#Contact Manager App
+<h1>Contact Manager App</h1>
 
-##Laravel App For Storing Contacts
+<p>Laravel App For Storing Contacts</p>
