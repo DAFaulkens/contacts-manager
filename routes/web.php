@@ -22,5 +22,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
+Route::put('contacts/upload', [ContactController::class, 'xmlUpload'])
+    ->middleware(['auth:sanctum', 'verified'])->name('contacts.upload');
+
 Route::resource('/contacts', ContactController::class)
     ->middleware(['auth:sanctum', 'verified']);
+

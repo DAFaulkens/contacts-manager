@@ -17,7 +17,7 @@ class ContactController extends Controller
     public function index()
     {
         return view('contacts.index')
-            ->with('contacts', Contact::orderBy('updated_at', 'desc')->paginate(10));
+            ->with('contacts', Contact::orderBy('created_at', 'desc')->paginate(10));
     }
 
     /**
@@ -116,6 +116,33 @@ class ContactController extends Controller
         $contact->delete();
         session()->flash('error', 'Contact deleted successfully');
 
+        return redirect(route('contacts.index'));
+    }
+
+    public function xmlUpload(Request $request) {
+
+        $this->validate($request, [
+            'xml_file' => 'required|file|mimes:xml',
+        ],[
+            'xml_file.required' => 'Please upload the contact file.',
+            'xml_file.mimes' => 'Please upload a file in XML format.',
+        ]);
+
+        //uploaded XML Contacts File (Not Storing the file in database)
+        $fileName = $request->xml_file;
+
+        //Storing Contacts
+        $xmldata = simplexml_load_file($fileName) or die("Failed to load");
+        foreach($xmldata->children() as $contact) {
+            Contact::updateOrCreate([
+                'name' => $contact->name,
+                'lastname' => $contact->lastName,
+                'phone' => $contact->phone,
+                'created_at' =>  Carbon::now(),
+            ]);
+        }
+
+        session()->flash('success', 'All contacts from the file created successfully');
         return redirect(route('contacts.index'));
     }
 }

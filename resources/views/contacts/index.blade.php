@@ -13,6 +13,42 @@
                         <div class="card" style="overflow-y: auto;">
                             <div class="card-header">
                                 <span>
+                                    <b>Add Contacts with XML File</b>
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <form action="{{route('contacts.upload')}}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+
+                                    @method('PUT')
+
+                                    <div class="form-group">
+                                        <label for="xml_file">XML Contacts File</label>
+                                        <input type="file" id="xml_file" class="form-control" name="xml_file">
+                                        @error('xml_file')
+                                        <span class="text-danger">{{$message}}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-success">Upload File</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card" style="overflow-y: auto;">
+                            <div class="card-header">
+                                <span>
                                     <b>Manage Contacts</b>
                                 </span>
                                 <p style="float:right;">
